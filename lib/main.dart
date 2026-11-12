@@ -12,8 +12,8 @@ class AppColors {
   static const textPrimary = Color(0xFFF8FAFC);
   static const textSecondary = Color(0xFFA7F3D0);
   static const textMuted = Color(0xFF6EE7B7);
-  static const primary = Color(0xFFEAB308); 
-  static const secondary = Color(0xFF10B981); 
+  static const primary = Color(0xFFEAB308); // طلایی
+  static const secondary = Color(0xFF10B981); // سبز
   static const accent = Color(0xFF34D399);
 }
 
@@ -38,6 +38,7 @@ class BeranjYarApp extends StatelessWidget {
   }
 }
 
+// ================= صفحه اصلی و منوی پایین =================
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -50,10 +51,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _screens = [
     const DashboardScreen(),
-    const Center(child: Text('صفحه زمین‌ها (به‌زودی)', style: TextStyle(color: Colors.white))),
-    const Center(child: Text('صفحه بازارچه (به‌زودی)', style: TextStyle(color: Colors.white))),
-    const Center(child: Text('صفحه قراردادها (به‌زودی)', style: TextStyle(color: Colors.white))),
-    const Center(child: Text('صفحه پروفایل (به‌زودی)', style: TextStyle(color: Colors.white))),
+    const Center(child: Text('صفحه زمین‌ها (به‌زودی)', style: TextStyle(color: AppColors.textPrimary))),
+    const MarketplaceScreen(), // <- بازارچه به اینجا وصل شد
+    const Center(child: Text('صفحه قراردادها (به‌زودی)', style: TextStyle(color: AppColors.textPrimary))),
+    const Center(child: Text('صفحه پروفایل (به‌زودی)', style: TextStyle(color: AppColors.textPrimary))),
   ];
 
   @override
@@ -79,6 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 }
 
+// ================= صفحه داشبورد =================
 class DashboardScreen extends StatelessWidget {
   const DashboardScreen({super.key});
 
@@ -197,6 +199,80 @@ class DashboardScreen extends StatelessWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+// ================= صفحه بازارچه (جدید) =================
+class MarketplaceScreen extends StatelessWidget {
+  const MarketplaceScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // داده‌های نمونه برای نمایش
+    final providers = [
+      {'name': 'بانک نشای هاشمی', 'city': 'آمل', 'price': '۱۵ میلیون/هکتار', 'icon': '🌱', 'verified': true},
+      {'name': 'ماشین نشاکار پیمانکار', 'city': 'بابل', 'price': '۳.۵ میلیون/هکتار', 'icon': '🚜', 'verified': false},
+      {'name': 'کمباین برداشت قائم‌شهر', 'city': 'قائم‌شهر', 'price': '۵ میلیون/هکتار', 'icon': '🌾', 'verified': true},
+      {'name': 'گروه کارگری نشاکاری', 'city': 'بابلسر', 'price': '۸۰۰ هزار/نفر', 'icon': '👷', 'verified': false},
+    ];
+
+    return Scaffold(
+      backgroundColor: AppColors.bgDark,
+      appBar: AppBar(
+        backgroundColor: AppColors.bgDark,
+        title: const Text('بازارچه نیازمندی‌ها', style: TextStyle(color: AppColors.textPrimary)),
+      ),
+      body: ListView.builder(
+        padding: const EdgeInsets.all(16),
+        itemCount: providers.length,
+        itemBuilder: (context, index) {
+          final p = providers[index];
+          return Container(
+            margin: const EdgeInsets.only(bottom: 12),
+            padding: const EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: AppColors.bgCard,
+              borderRadius: BorderRadius.circular(16),
+              border: Border.all(color: AppColors.border),
+            ),
+            child: Row(
+              children: [
+                Text(p['icon']!, style: const TextStyle(fontSize: 32)),
+                const SizedBox(width: 16),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          Text(p['name']!, style: const TextStyle(color: AppColors.textPrimary, fontSize: 16, fontWeight: FontWeight.bold)),
+                          if (p['verified'] as bool) ...[
+                            const SizedBox(width: 4),
+                            const Icon(Icons.verified, color: AppColors.primary, size: 16),
+                          ]
+                        ],
+                      ),
+                      const SizedBox(height: 4),
+                      Text(p['city']!, style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+                      const SizedBox(height: 8),
+                      Text(p['price']!, style: const TextStyle(color: AppColors.primary, fontSize: 14, fontWeight: FontWeight.bold)),
+                    ],
+                  ),
+                ),
+                ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.primary,
+                    foregroundColor: AppColors.bgDark,
+                  ),
+                  onPressed: () {},
+                  child: const Text('رزرو'),
+                ),
+              ],
+            ),
+          );
+        },
       ),
     );
   }
