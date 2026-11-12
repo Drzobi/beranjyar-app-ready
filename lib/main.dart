@@ -204,14 +204,14 @@ class DashboardScreen extends StatelessWidget {
   }
 }
 
-// ================= صفحه بازارچه (جدید) =================
+// ================= صفحه بازارچه (جدید و اصلاح شده) =================
 class MarketplaceScreen extends StatelessWidget {
   const MarketplaceScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    // داده‌های نمونه برای نمایش
-    final providers = [
+    // اینجا نوع داده‌ها رو دقیق مشخص کردم که فلاتر ارور نده
+    final List<Map<String, dynamic>> providers = [
       {'name': 'بانک نشای هاشمی', 'city': 'آمل', 'price': '۱۵ میلیون/هکتار', 'icon': '🌱', 'verified': true},
       {'name': 'ماشین نشاکار پیمانکار', 'city': 'بابل', 'price': '۳.۵ میلیون/هکتار', 'icon': '🚜', 'verified': false},
       {'name': 'کمباین برداشت قائم‌شهر', 'city': 'قائم‌شهر', 'price': '۵ میلیون/هکتار', 'icon': '🌾', 'verified': true},
@@ -239,7 +239,7 @@ class MarketplaceScreen extends StatelessWidget {
             ),
             child: Row(
               children: [
-                Text(p['icon']!, style: const TextStyle(fontSize: 32)),
+                Text(p['icon'] as String, style: const TextStyle(fontSize: 32)),
                 const SizedBox(width: 16),
                 Expanded(
                   child: Column(
@@ -247,7 +247,7 @@ class MarketplaceScreen extends StatelessWidget {
                     children: [
                       Row(
                         children: [
-                          Text(p['name']!, style: const TextStyle(color: AppColors.textPrimary, fontSize: 16, fontWeight: FontWeight.bold)),
+                          Text(p['name'] as String, style: const TextStyle(color: AppColors.textPrimary, fontSize: 16, fontWeight: FontWeight.bold)),
                           if (p['verified'] as bool) ...[
                             const SizedBox(width: 4),
                             const Icon(Icons.verified, color: AppColors.primary, size: 16),
@@ -255,9 +255,9 @@ class MarketplaceScreen extends StatelessWidget {
                         ],
                       ),
                       const SizedBox(height: 4),
-                      Text(p['city']!, style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+                      Text(p['city'] as String, style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
                       const SizedBox(height: 8),
-                      Text(p['price']!, style: const TextStyle(color: AppColors.primary, fontSize: 14, fontWeight: FontWeight.bold)),
+                      Text(p['price'] as String, style: const TextStyle(color: AppColors.primary, fontSize: 14, fontWeight: FontWeight.bold)),
                     ],
                   ),
                 ),
